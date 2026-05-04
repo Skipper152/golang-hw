@@ -1,3 +1,5 @@
+// Package hw03frequencyanalysis provides the Top10 function that returns
+// the ten most frequent words in a given text.
 package hw03frequencyanalysis
 
 import (
@@ -16,11 +18,14 @@ type pair struct {
 	count int
 }
 
+// Top10 returns up to ten most frequent words from the given string.
+// Words are compared case-insensitively; edge punctuation is trimmed.
+// Ties in frequency are broken lexicographically.
 func Top10(str string) []string {
-	//convert string to lowercase
+	// convert string to lowercase
 	str = strings.ToLower(str)
 
-	//fill map to count repetitions
+	// fill map to count repetitions
 	fields := strings.Fields(str)
 	fieldsMap := make(map[string]*pair)
 	for _, word := range fields {
@@ -39,18 +44,18 @@ func Top10(str string) []string {
 		}
 
 		fieldsMap[trimWord] = &pair{
-			//using a regular expression to trim punctuation marks
+			// using a regular expression to trim punctuation marks
 			word:  trimWord,
 			count: 1,
 		}
 	}
 
-	//convert map to iter (slice)
+	// convert map to iter (slice)
 	fieldsIter := maps.Values(fieldsMap)
 
-	//sorting:
-	//- 1 - if words do not occur the same number of times, compare them in descending order;
-	//- 2 - it's the same, then sort it lexically.
+	// sorting:
+	// - 1 - if words do not occur the same number of times, compare them in descending order;
+	// - 2 - it's the same, then sort it lexically.
 	sortedFields := slices.SortedFunc(
 		fieldsIter,
 		func(p1, p2 *pair) int {
@@ -61,7 +66,7 @@ func Top10(str string) []string {
 		},
 	)
 
-	//create summary slice
+	// create summary slice
 	res := make([]string, 0, 10)
 	if len(sortedFields) > 10 {
 		for _, p := range sortedFields[:10] {
