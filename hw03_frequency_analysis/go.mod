@@ -1,6 +1,6 @@
 module github.com/golang-hw/hw03_frequency_analysis
 
-go 1.19
+go 1.25
 
 require github.com/stretchr/testify v1.7.0
 
